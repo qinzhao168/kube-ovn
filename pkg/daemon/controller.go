@@ -10,7 +10,6 @@ import (
 
 	"github.com/alauda/kube-ovn/pkg/util"
 	"github.com/coreos/go-iptables/iptables"
-	"github.com/projectcalico/felix/ipsets"
 	"github.com/vishvananda/netlink"
 	v1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -38,7 +37,6 @@ type Controller struct {
 	podQueue   workqueue.RateLimitingInterface
 
 	ovnClient   *ovs.Client
-	ipSetsMgr   *ipsets.IPSets
 	iptablesMgr *iptables.IPTables
 }
 
@@ -50,8 +48,6 @@ func NewController(config *Configuration, informerFactory informers.SharedInform
 	if err != nil {
 		return nil, err
 	}
-	ipsetConf := ipsets.NewIPVersionConfig(ipsets.IPFamilyV4, IPSetPrefix, nil, nil)
-	ipsetsMgr := ipsets.NewIPSets(ipsetConf)
 	controller := &Controller{
 		config:           config,
 		kubeclientset:    config.KubeClient,
@@ -64,7 +60,6 @@ func NewController(config *Configuration, informerFactory informers.SharedInform
 		podQueue:   workqueue.NewNamedRateLimitingQueue(workqueue.DefaultControllerRateLimiter(), "Pod"),
 
 		ovnClient:   ovnClient,
-		ipSetsMgr:   ipsetsMgr,
 		iptablesMgr: iptablesMgr,
 	}
 

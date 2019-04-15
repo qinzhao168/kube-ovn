@@ -32,17 +32,13 @@
   version = "kubernetes-1.13.2"
 
 [[constraint]]
-  name = "github.com/projectcalico/felix"
-  version = "v3.5.4"
-
-[[override]]
-  name = "github.com/projectcalico/libcalico-go"
-  revision = "3d935c3b8b860224bcedf1aaa02bedaadf0a180c"
-
-[[constraint]]
   name = "github.com/coreos/go-iptables"
   version = "v0.4.0"
 
 [[constraint]]
   name = "github.com/juju/errors"
+  branch = "master"
+
+[[constraint]]
+  name = "github.com/xaionaro-go/go-ipset"
   branch = "master"

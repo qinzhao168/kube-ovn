@@ -6,14 +6,14 @@ import (
 	"time"
 
 	"github.com/alauda/kube-ovn/pkg/util"
-	"github.com/projectcalico/felix/ipsets"
+	"github.com/xaionaro-go/go-ipset/ipset"
 	"k8s.io/apimachinery/pkg/labels"
 	"k8s.io/klog"
 )
 
 const (
-	SubnetSet   = "subnets"
-	LocalPodSet = "local-pod-ip-nat"
+	SubnetSet   = "ovn-subnets"
+	LocalPodSet = "ovn-local-pod-ip-nat"
 	IPSetPrefix = "ovn"
 )
 
@@ -21,7 +21,7 @@ var (
 	natRule = util.IPTableRule{
 		Table: "nat",
 		Chain: "POSTROUTING",
-		Rule:  strings.Split("-m set --match-set ovn40local-pod-ip-nat src -m set ! --match-set ovn40subnets dst -j MASQUERADE", " "),
+		Rule:  strings.Split("-m set --match-set ovn-local-pod-ip-nat src -m set ! --match-set ovn-subnets dst -j MASQUERADE", " "),
 	}
 	forwardAcceptRule1 = util.IPTableRule{
 		Table: "filter",
@@ -47,17 +47,36 @@ func (c *Controller) runGateway(stopCh <-chan struct{}) error {
 		klog.Errorf("get local pod ips failed, %+v", err)
 		return err
 	}
-	c.ipSetsMgr.AddOrReplaceIPSet(ipsets.IPSetMetadata{
-		MaxSize: 1048576,
-		SetID:   SubnetSet,
-		Type:    ipsets.IPSetTypeHashNet,
-	}, subnets)
-	c.ipSetsMgr.AddOrReplaceIPSet(ipsets.IPSetMetadata{
-		MaxSize: 1048576,
-		SetID:   LocalPodSet,
-		Type:    ipsets.IPSetTypeHashIP,
-	}, localPodIPs)
-	c.ipSetsMgr.ApplyUpdates()
+	subnetSet, err := ipset.New(SubnetSet, "hash:net", &ipset.Params{
+		HashFamily: "inet",
+		HashSize:   1024,
+		MaxElem:    1048576,
+		Exist:      true,
+	})
+	if err != nil {
+		klog.Errorf("create ipset failed, %+v", err)
+		return err
+	}
+	err = subnetSet.Refresh(subnets)
+	if err != nil {
+		klog.Errorf("refresh ipset failed, %+v", err)
+		return err
+	}
+	localPodIPSet, err := ipset.New(LocalPodSet, "hash:ip", &ipset.Params{
+		HashFamily: "inet",
+		HashSize:   1024,
+		MaxElem:    1048576,
+		Exist:      true,
+	})
+	if err != nil {
+		klog.Errorf("create ipset failed, %+v", err)
+		return err
+	}
+	err = localPodIPSet.Refresh(localPodIPs)
+	if err != nil {
+		klog.Errorf("refresh ipset failed, %+v", err)
+		return err
+	}
 
 	for _, iptRule := range []util.IPTableRule{forwardAcceptRule1, forwardAcceptRule2, natRule} {
 		exists, err := c.iptablesMgr.Exists(iptRule.Table, iptRule.Chain, iptRule.Rule...)
@@ -96,17 +115,16 @@ LOOP:
 			continue
 		}
 
-		c.ipSetsMgr.AddOrReplaceIPSet(ipsets.IPSetMetadata{
-			MaxSize: 1048576,
-			SetID:   SubnetSet,
-			Type:    ipsets.IPSetTypeHashNet,
-		}, subnets)
-		c.ipSetsMgr.AddOrReplaceIPSet(ipsets.IPSetMetadata{
-			MaxSize: 1048576,
-			SetID:   LocalPodSet,
-			Type:    ipsets.IPSetTypeHashIP,
-		}, localPodIPs)
-		c.ipSetsMgr.ApplyUpdates()
+		err = subnetSet.Refresh(subnets)
+		if err != nil {
+			klog.Errorf("refresh ipset failed, %+v", err)
+			return err
+		}
+		err = localPodIPSet.Refresh(localPodIPs)
+		if err != nil {
+			klog.Errorf("refresh ipset failed, %+v", err)
+			return err
+		}
 	}
 	return nil
 }

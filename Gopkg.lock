@@ -2,12 +2,12 @@
 
 
 [[projects]]
-  branch = "master"
-  digest = "1:707ebe952a8b3d00b343c01536c79c73771d100f63ec6babeaed5c79e2b8a8dd"
-  name = "github.com/beorn7/perks"
-  packages = ["quantile"]
+  digest = "1:998e4640c25e00ccb7b2569bf94562283937b8afb3485c0e1a0a05a15330240d"
+  name = "github.com/Sirupsen/logrus"
+  packages = ["."]
   pruneopts = "NUT"
-  revision = "3a771d992973f24aa725d07868b467d1ddfceafb"
+  revision = "8bdbc7bcc01dcbb8ec23dc8a28e332258d25251f"
+  version = "v1.4.1"
 
 [[projects]]
   digest = "1:fdd07ff1d3b56a4338688dca999e7a09eacab635d450ca9338bfdd81fd817d9e"
@@ -38,6 +38,14 @@
   pruneopts = "NUT"
   revision = "47f22b0dd3355c0ba570ba12b0b8a36bf214c04b"
   version = "v0.4.0"
+
+[[projects]]
+  digest = "1:05ffeeed3f0f05520de0679f6aa3219ffee69cfd6d9fb6c194879d4c818ad670"
+  name = "github.com/coreos/go-semver"
+  packages = ["semver"]
+  pruneopts = "NUT"
+  revision = "e214231b295a8ea9479f11b70b35d5acf3556d9b"
+  version = "v0.3.0"
 
 [[projects]]
   digest = "1:ffe9824d294da03b391f44e1ae8281281b4afc1bdaa9588c9097785e3af10cec"
@@ -174,14 +182,6 @@
   version = "v1.0.2"
 
 [[projects]]
-  digest = "1:5985ef4caf91ece5d54817c11ea25f182697534f8ae6521eadcd628c142ac4b6"
-  name = "github.com/matttproud/golang_protobuf_extensions"
-  packages = ["pbutil"]
-  pruneopts = "NUT"
-  revision = "c12348ce28de40eed0136aa2b644d0ee0650e56c"
-  version = "v1.0.1"
-
-[[projects]]
   digest = "1:2f42fa12d6911c7b7659738758631bec870b7e9b4c6be5444f963cdcfccc191f"
   name = "github.com/modern-go/concurrent"
   packages = ["."]
@@ -238,90 +238,6 @@
   version = "v0.8.1"
 
 [[projects]]
-  digest = "1:152af64076edcf774568a8753d781d867740597a8c248025edb97491625b2ad0"
-  name = "github.com/projectcalico/felix"
-  packages = [
-    "dispatcher",
-    "ip",
-    "ipsets",
-    "labelindex",
-  ]
-  pruneopts = "NUT"
-  revision = "f0dde4bc7c1d40c0bddf47600465ed1d372c1f17"
-  version = "v3.6.1"
-
-[[projects]]
-  digest = "1:92d0b81bdebcc717114a6d5b43976d95475bf349c482343c57ca7b81eb889092"
-  name = "github.com/projectcalico/libcalico-go"
-  packages = [
-    "lib/apis/v1",
-    "lib/apis/v1/unversioned",
-    "lib/apis/v3",
-    "lib/backend/api",
-    "lib/backend/model",
-    "lib/errors",
-    "lib/hash",
-    "lib/ipip",
-    "lib/namespace",
-    "lib/net",
-    "lib/numorstring",
-    "lib/scope",
-    "lib/selector",
-    "lib/selector/parser",
-    "lib/selector/tokenizer",
-    "lib/set",
-  ]
-  pruneopts = "NUT"
-  revision = "3d935c3b8b860224bcedf1aaa02bedaadf0a180c"
-
-[[projects]]
-  digest = "1:00e5485f002096d8284d57ce59acb8e08121a5accdf92777ca7368bf9e5e18e8"
-  name = "github.com/prometheus/client_golang"
-  packages = [
-    "prometheus",
-    "prometheus/internal",
-  ]
-  pruneopts = "NUT"
-  revision = "505eaef017263e299324067d40ca2c48f6a2cf50"
-  version = "v0.9.2"
-
-[[projects]]
-  branch = "master"
-  digest = "1:2d5cd61daa5565187e1d96bae64dbbc6080dacf741448e9629c64fd93203b0d4"
-  name = "github.com/prometheus/client_model"
-  packages = ["go"]
-  pruneopts = "NUT"
-  revision = "fd36f4220a901265f90734c3183c5f0c91daa0b8"
-
-[[projects]]
-  digest = "1:4e776079b966091d3e6e12ed2aaf728bea5cd1175ef88bb654e03adbf5d4f5d3"
-  name = "github.com/prometheus/common"
-  packages = [
-    "expfmt",
-    "internal/bitbucket.org/ww/goautoneg",
-    "model",
-  ]
-  pruneopts = "NUT"
-  revision = "cfeb6f9992ffa54aaa4f2170ade4067ee478b250"
-  version = "v0.2.0"
-
-[[projects]]
-  branch = "master"
-  digest = "1:7813f698f171bd7132b123364433e1b0362f7fdb4ed7f4a20df595a4c2410f8a"
-  name = "github.com/prometheus/procfs"
-  packages = ["."]
-  pruneopts = "NUT"
-  revision = "af7bedc223fba51343f25a6fa7aba84355d0357a"
-
-[[projects]]
-  digest = "1:998e4640c25e00ccb7b2569bf94562283937b8afb3485c0e1a0a05a15330240d"
-  name = "github.com/sirupsen/logrus"
-  packages = ["."]
-  pruneopts = "NUT"
-  revision = "8bdbc7bcc01dcbb8ec23dc8a28e332258d25251f"
-  version = "v1.4.1"
-
-[[projects]]
   digest = "1:9d8420bbf131d1618bde6530af37c3799340d3762cc47210c1d9532a4c3a2779"
   name = "github.com/spf13/pflag"
   packages = ["."]
@@ -347,6 +263,14 @@
   packages = ["."]
   pruneopts = "NUT"
   revision = "13995c7128ccc8e51e9a6bd2b551020a27180abd"
+
+[[projects]]
+  branch = "master"
+  digest = "1:1e0936106cc49f07231dd21042facdb5f7f431eff3f40366f385b4ae9d97dad2"
+  name = "github.com/xaionaro-go/go-ipset"
+  packages = ["ipset"]
+  pruneopts = "NUT"
+  revision = "348463e1433bde1b7a7783199c2eb910321790d1"
 
 [[projects]]
   branch = "master"
@@ -738,9 +662,9 @@
     "github.com/emicklei/go-restful",
     "github.com/juju/errors",
     "github.com/parnurzeal/gorequest",
-    "github.com/projectcalico/felix/ipsets",
     "github.com/spf13/pflag",
     "github.com/vishvananda/netlink",
+    "github.com/xaionaro-go/go-ipset/ipset",
     "k8s.io/api/core/v1",
     "k8s.io/apimachinery/pkg/api/errors",
     "k8s.io/apimachinery/pkg/apis/meta/v1",
